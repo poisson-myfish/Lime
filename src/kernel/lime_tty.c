@@ -1,82 +1,41 @@
 #include <kernel/lime_tty.h>
+#include <kernel/drivers/vga_text_mode.h>
 #include <string.h>
 
-static u8 vga_get_color(VgaColor fg, VgaColor bg);
-static u16 vga_entry(char c, u8 color);
-
-static const u32 WIDTH = 80;
-static const u32 HEIGHT = 25;
-
-static u32 ttyRow;
-static u32 ttyColumn;
-static u8 ttyColor;
-static u16* ttyBuffer;
-
-void lime_tty_init()
+static struct
 {
-    ttyRow = 0;
-    ttyColumn = 0;
-    ttyColor = vga_get_color(VgaWhite, VgaBlack);
-    ttyBuffer = (u16*)0xB8000;
+    void (*init)();
+    void (*putch)(char c);
+    void (*putstr)(const char* data);
+    void (*clear)();
+} ttyDriver;
 
-    lime_tty_clear(' ');
-}
-
-void lime_tty_set_color(u8 color)
+void lime_tty_init(TtyDriver drv)
 {
-    ttyColor = color;
-}
+    switch (drv)
+    {
+    case TtyTextMode:
+        ttyDriver.init = drv_text_mode_init;
+        ttyDriver.putch = drv_text_mode_put_char;
+        ttyDriver.putstr = drv_text_mode_put_string;
+        ttyDriver.clear = drv_text_mode_clear;
+        break;
+    }
 
-void lime_tty_put_at(char c, u8 color, u32 x, u32 y)
-{
-    u32 index = y * WIDTH + x;
-    ttyBuffer[index] = vga_entry(c, color);
+    ttyDriver.init();
 }
 
 void lime_tty_put_char(char c)
 {
-    lime_tty_put_at(c, ttyColor, ttyColumn, ttyRow);
-    ttyColumn += 1;
-    if (ttyColumn == WIDTH)
-    {
-        ttyColumn = 0;
-        ttyRow += 1;
-
-        if (ttyRow == HEIGHT)
-            ttyRow = 0;
-    }
-}
-
-void lime_tty_write(const char* data, u32 size)
-{
-    for (u32 i = 0; i < size; i += 1)
-        lime_tty_put_char(data[i]);
+    ttyDriver.putch(c);
 }
 
 void lime_tty_put_string(const char* data)
 {
-    lime_tty_write(data, str_len(data));
-}
-
-
-static u8 vga_get_color(VgaColor fg, VgaColor bg)
-{
-    return fg | bg << 4;
-}
-
-static u16 vga_entry(char c, u8 color)
-{
-    return (u16)c | (u16)color << 8;
+    ttyDriver.putstr(data);
 }
 
 void lime_tty_clear()
 {
-    for (u32 y = 0; y < HEIGHT; y += 1)
-    {
-        for (u32 x = 0; x < WIDTH; x += 1)
-        {
-            u32 index = y * WIDTH + x;
-            ttyBuffer[index] = vga_entry(' ', ttyColor);
-        }
-    }
+    ttyDriver.clear();
 }

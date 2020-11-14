@@ -10,6 +10,7 @@ BIN = build/kernel.bin
 ASMSOURCES = $(wildcard src/kernel/*.asm)
 CSOURCES = $(wildcard src/kernel/*.c)
 CSOURCES += $(wildcard src/*.c)
+CSOURCES += $(wildcard src/kernel/drivers/*.c)
 
 COBJECTS = $(CSOURCES:src/%.c=obj/%.o)
 ASMOBJECTS = $(ASMSOURCES:src/%.asm=obj/%.o)
