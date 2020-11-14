@@ -1,0 +1,24 @@
+CC = clang
+LD = toolchain/binutils/bin/i686-elf-ld
+CFLAGS = -target=i386-pc-elf -std=c99 -c
+AC = nasm
+AFLAGS = -felf32
+LFLAGS = -T linker.ld
+
+BIN = build/kernel.bin
+
+ASMSOURCES = $(wildcard src/kernel/*.asm)
+CSOURCES = $(wildcard src/kernel/*.c)
+
+COBJECTS = $(CSOURCES:src/%.c=obj/%.o)
+ASMOBJECTS = $(ASMSOURCES:src/%.asm=obj/%.o)
+
+$(BIN): $(COBJECTS) $(ASMOBJECTS)
+	$(LD) $(LFLAGS) $(COBJECTS) $(ASMOBJECTS) -o $(BIN)
+
+$(COBJECTS): $(CSOURCES)
+	$(CC) $(CFLAGS) $< -o $@
+
+$(ASMOBJECTS): $(ASMSOURCES)
+	$(AC) $(AFLAGS) $< -o $@
+

@@ -1,0 +1,8 @@
+#ifndef LIME_KERNEL_TTY_H
+#define LIME_KERNEL_TTY_H
+
+typedef enum
+{
+} VgaColor;
+
+#endif
