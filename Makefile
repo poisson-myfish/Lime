@@ -16,13 +16,24 @@ COBJECTS = $(CSOURCES:src/%.c=obj/%.o)
 ASMOBJECTS = $(ASMSOURCES:src/%.asm=obj/%.o)
 
 $(BIN): $(COBJECTS) $(ASMOBJECTS)
-	$(LD) $(LFLAGS) $(COBJECTS) $(ASMOBJECTS) -o $(BIN)
+	@mkdir -p build
+	@echo "[LINK] $(BIN)"
+	@$(LD) $(LFLAGS) $(COBJECTS) $(ASMOBJECTS) -o $(BIN)
 
 obj/%.o: src/%.c
-	$(CC) $(CFLAGS) $< -o $@
+	@echo "[COMPILE-C] $<"
+	@mkdir -p obj/kernel/drivers
+	@$(CC) $(CFLAGS) $< -o $@
 
 obj/%.o: src/%.asm
-	$(AC) $(AFLAGS) $< -o $@
+	@echo "[COMPILE-ASM] $<"
+	@mkdir -p obj/kernel/drivers
+	@$(AC) $(AFLAGS) $< -o $@
+
+clean:
+	@rm -rf build
+	@rm -rf obj
 
 run-qemu:
-	qemu-system-i386 -kernel $(BIN)
+	@echo "Running in QEMU"
+	@qemu-system-i386 -kernel $(BIN)
