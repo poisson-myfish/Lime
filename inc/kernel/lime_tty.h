@@ -10,6 +10,7 @@ typedef enum
 void lime_tty_init(TtyDriver drv);
 void lime_tty_put_char(char c);
 void lime_tty_put_string(const char* data);
+void lime_tty_put_int(int number);
 void lime_tty_clear();
 
 #endif

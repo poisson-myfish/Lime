@@ -27,6 +27,7 @@ void drv_text_mode_write(const char* data, u32 size);
 void drv_text_mode_set_color(u8 color);
 void drv_text_mode_put_char(char c);
 void drv_text_mode_put_string(const char* data);
+void drv_text_mode_put_int(int number);
 void drv_text_mode_clear();
 void drv_text_mode_put_at(char c, u8 color, u32 x, u32 y);
 

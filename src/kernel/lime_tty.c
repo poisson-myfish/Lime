@@ -7,6 +7,7 @@ static struct
     void (*init)();
     void (*putch)(char c);
     void (*putstr)(const char* data);
+    void (*putint)(int number);
     void (*clear)();
 } ttyDriver;
 
@@ -18,6 +19,7 @@ void lime_tty_init(TtyDriver drv)
         ttyDriver.init = drv_text_mode_init;
         ttyDriver.putch = drv_text_mode_put_char;
         ttyDriver.putstr = drv_text_mode_put_string;
+        ttyDriver.putint = drv_text_mode_put_int;
         ttyDriver.clear = drv_text_mode_clear;
         break;
     }
@@ -33,6 +35,11 @@ void lime_tty_put_char(char c)
 void lime_tty_put_string(const char* data)
 {
     ttyDriver.putstr(data);
+}
+
+void lime_tty_put_int(int number)
+{
+    ttyDriver.putint(number);
 }
 
 void lime_tty_clear()

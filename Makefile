@@ -1,8 +1,8 @@
 CC = clang
 LD = toolchain/binutils/bin/i686-elf-ld -no-PIE
-CFLAGS = --target=i386-pc-elf -std=c99 -c -I inc -fno-PIC -ffreestanding -fno-builtin -nostdlib
+CFLAGS = --target=i386-pc-elf -std=gnu99 -c -I inc -fno-PIC -ffreestanding -fno-builtin -nostdlib
 AC = nasm
-AFLAGS = -felf32
+AFLAGS = -felf32 -i src/kernel
 LFLAGS = -T linker.ld
 
 BIN = build/kernel.bin

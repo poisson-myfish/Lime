@@ -1,0 +1,56 @@
+section .text
+global _load_idt
+_load_idt:
+    lidt [idt_info]
+    ret
+
+%macro IRQ 1
+irq%1:
+    dd isr%1
+    dw 0x0008
+    db 0x00
+    db 10101110b
+    dd isr%1_end
+%endmacro
+
+    %include "interrupts.asm"
+    
+section .rodata
+idt:
+    IRQ 0
+    IRQ 1
+    IRQ 2
+    IRQ 3
+    IRQ 4
+    IRQ 5
+    IRQ 6
+    IRQ 7
+    IRQ 8
+    IRQ 9
+    IRQ 10
+    IRQ 11
+    IRQ 12
+    IRQ 13
+    IRQ 14
+    IRQ 15
+    IRQ 16
+    IRQ 17
+    IRQ 18
+    IRQ 19
+    IRQ 20
+    IRQ 21
+    IRQ 22
+    IRQ 23
+    IRQ 24
+    IRQ 25
+    IRQ 26
+    IRQ 27
+    IRQ 28
+    IRQ 29
+    IRQ 30
+    IRQ 31
+    IRQ 32
+
+idt_info:
+    dw idt_info - idt - 1
+    dd idt

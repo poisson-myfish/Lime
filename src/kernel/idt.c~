@@ -1,0 +1,8 @@
+#include <kernel/idt.h>
+#include <kernel/lime_tty.h>
+#include <registers.h>
+
+void handler(Registers regs)
+{
+    lime_tty_put_string("Interrupt received!\n");
+}

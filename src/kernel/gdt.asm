@@ -1,4 +1,3 @@
-    BITS 32
 section .data
     ALIGN 4
 
@@ -38,7 +37,7 @@ gdt_data:
     db 00h
     db 10010010b
     db 11001111b
-    db 00h
+    db 0
 
 gdt_desc:
     dw gdt_desc - gdt - 1

@@ -1,9 +1,0 @@
-# Lime
-A small operating system with a custom kernel.
-
-I just started this project, so don't expect anything.
-The build system also has rough edges, but it will improve with time.
-
-# Building
-I build it with clang, so there is no need for a cross-compiler. We do, however, compile the linker.
-To build, just

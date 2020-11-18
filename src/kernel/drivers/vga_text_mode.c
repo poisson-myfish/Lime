@@ -67,6 +67,12 @@ void drv_text_mode_put_string(const char* data)
     drv_text_mode_write(data, str_len(data));
 }
 
+void drv_text_mode_put_int(int number)
+{
+    char str[100];
+    drv_text_mode_put_string(int_to_string(number, str, 10));
+}
+
 void drv_text_mode_clear()
 {
     for (u32 y = 0; y < HEIGHT; y += 1)

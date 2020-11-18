@@ -1,0 +1,13 @@
+#ifndef LIME_REGISTERS_H
+#define LIME_REGISTERS_H
+#include <utils.h>
+
+typedef struct
+{
+    u32 ds;
+    u32 edi, esi, ebp, esp, ebx, edx, ecx, eax;
+    u32 int_no, err_code;  // For interrupts
+    u32 eip, cs, eflags, useresp, ss;  // Pushed by CPU
+} Registers;
+
+#endif

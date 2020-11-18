@@ -1,0 +1,7 @@
+# bochsrc
+megs: 1024
+mouse: enabled = 0
+ata1-master:type=cdrom, path=os.iso, status=inserted
+boot: cdrom
+vgaromimage:file = /usr/share/bochs/VGABIOS-lgpl-latest
+romimagefile:file = /usr/share/bochs/BIOS-bochs-latest

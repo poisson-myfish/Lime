@@ -1,0 +1,24 @@
+#ifndef LIME_IDT_H
+#define LIME_IDT_H
+#include <utils.h>
+
+struct StructIdtEntry
+{
+    u16 base_low;
+    u16 selector;
+    u8 zero;
+    u8 flags;
+    u16 base_high;
+} __attribute__((packed));
+typedef struct StructIdtEntry IdtEntry;
+
+struct StructIdtPtr
+{
+    u16 limit;
+    u32 base;
+} __attribute__((packed));
+typedef struct StructIdtPtr IdtPtr;
+
+void init_idt();
+
+#endif

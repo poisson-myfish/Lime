@@ -1,5 +1,0 @@
-#include <string.h>
-
-u32 str_len()
-{
-}

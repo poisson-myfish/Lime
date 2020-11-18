@@ -7,4 +7,6 @@ typedef uint16_t u16;
 typedef uint32_t u32;
 typedef uint64_t u64;
 
+char* int_to_string(int number, char* string, int base);
+
 #endif
